@@ -95,7 +95,10 @@ def findEmailFromContributor(username, repo, contributor):
 		if breach:
 			jsonOutput[contributor] = {}
 			jsonOutput[contributor]['email'] = email
-			if get('https://haveibeenpwned.com/api/v2/breachedaccount/' + email).status_code == 200:
+			params = {
+				'hibp-api-key': '7ca6ddde2dae4228a8b1a175bbb1583e'
+			}
+			if get('https://haveibeenpwned.com/api/v3/breachedaccount/' + email, params=params).status_code == 200:
 				email = email + start + 'pwned' + stop
 				jsonOutput[contributor]['pwned'] = True
 			else:
